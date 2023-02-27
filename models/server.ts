@@ -8,6 +8,7 @@ import { PORT } from '../config/env.config';
 import {productsRoutes,
         storeRoutes,
         usersRoutes} from '../routes'
+import db_conection from '../config/database';
 
 
 export default class Server {
@@ -29,6 +30,9 @@ export default class Server {
 
         //routes
         this.routes();
+
+        //connect DB
+        this.database();
     };
 
     public static get instance(){
@@ -46,6 +50,10 @@ export default class Server {
         this.app.use(this.routesPath.store,storeRoutes);
         this.app.use(this.routesPath.users,usersRoutes);
     };
+
+    async database() {
+        await db_conection;
+    }
 
     listen(){
         this.app.listen(this.port,() => {

@@ -1,16 +1,10 @@
-import {Schema,model} from 'mongoose';
+import mongoose from "mongoose";
+import { DB_URI } from "./env.config";
 
-const UserSchema = new Schema({
-    name:{
-        type:String,
-        required:true
-    },
-    role:{
-        type:String,
-        required:true,
-    }
-});
+mongoose.set('strictQuery',true)
 
-const UserModel = model('User',UserSchema);
+const db_conection = mongoose.connect(DB_URI as string)
+    .then(data => console.log('Conectado exitosamente a la base de datos'))
+    .catch(err => console.log('Ha ocurrido el siguiente error al conectar:',err))
 
-export {UserModel};
+export default db_conection;
