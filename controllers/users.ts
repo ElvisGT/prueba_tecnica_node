@@ -1,38 +1,42 @@
 import { Request, Response } from "express";
+import User from '../models/user';
+import {Users} from '../type/users';
 
-const getUsers = (req: Request, res: Response) => {
 
-    res.json({
-        msg: "Anda"
-    });
+const getUsers = async(req: Request, res: Response) => {
+    const users = await User.find({});
+    
+    res.json({results:users})
 };
 
-const getUserByID = (req: Request, res: Response) => {
-
-    res.json({
-        msg: "Anda"
-    });
+const getUserByID = async(req: Request, res: Response) => {
+    const {id} = req.params;
+    const user = await User.findById(id);
+    
+    res.json(user)
 };
 
-const createUser = (req: Request, res: Response) => {
+const createUser = async(req: Request, res: Response) => {
+    const {name,role}:Users = req.body;
+    const user = new User({name,role});
+    await user.save();
 
-    res.json({
-        msg: "Anda"
-    });
+    res.status(201).json(user);
 };
 
-const updateUser = (req: Request, res: Response) => {
+const updateUser = async(req: Request, res: Response) => {
+    const {id} = req.params;
+    const {name,role}:Users = req.body;
+    const user = await User.findByIdAndUpdate(id,{name,role},{new:true});
 
-    res.json({
-        msg: "Anda"
-    });
+    res.json({user});
 };
 
-const deleteUser = (req: Request, res: Response) => {
+const deleteUser = async(req: Request, res: Response) => {
+    const {id} = req.params;
+    const user = await User.findByIdAndDelete(id);
 
-    res.json({
-        msg: "Anda"
-    });
+    res.json({user});
 };
 
 export {

@@ -43,6 +43,7 @@ export default class Server {
         this.app.use(cors());
         this.app.use(compression());
         this.app.use(helmet());
+        this.app.use(express.json())
     };
 
     routes(){
