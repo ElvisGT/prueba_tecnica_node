@@ -5,7 +5,9 @@ import helmet from 'helmet';
 import dontenv from 'dotenv';
 dontenv.config();
 import { PORT } from '../config/env.config';
-import {productsRoutes,storeRoutes,usersRoutes} from '../routes'
+import {productsRoutes,
+        storeRoutes,
+        usersRoutes} from '../routes'
 
 
 export default class Server {
@@ -41,8 +43,8 @@ export default class Server {
 
     routes(){
         this.app.use(this.routesPath.products,productsRoutes);
-        this.app.use(this.routesPath.products,storeRoutes);
-        this.app.use(this.routesPath.products,usersRoutes);
+        this.app.use(this.routesPath.store,storeRoutes);
+        this.app.use(this.routesPath.users,usersRoutes);
     };
 
     listen(){
