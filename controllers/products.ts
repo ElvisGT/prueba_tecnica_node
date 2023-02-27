@@ -26,7 +26,8 @@ const createProduct = async(req: Request, res: Response) => {
         total:amount
     }
 
-    const store = new Store(productToStore)
+    const store = new Store(productToStore);
+    product.amount = 0;
 
     Promise.all([
         product.save(),
@@ -61,17 +62,18 @@ const deleteProduct = async(req: Request, res: Response) => {
     const {id} = req.params;
     const {amount} = req.body;
     const product = await Product.findById(id);
-    const product_store = await Store.findOne({product:product?._id})
+    const product_store = await Store.findOne({product:product?._id});
+    let updatedStore = null;
     
     if(product_store){
-        await Store.findOneAndUpdate(
+        updatedStore = await Store.findOneAndUpdate(
             {product:product?._id},
             {total:product_store.total - amount},
             {new:true}
         )
     }
 
-    res.json({product});
+    res.json({updatedStore});
 };
 
 export {
