@@ -1,5 +1,5 @@
 import { Request, Response,NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { SECRET_KEY } from '../config/env.config';
 import User from '../models/user';
 import { PayloadJWT } from '../type/jwt';
@@ -14,8 +14,8 @@ export const validateJWT = async(req:Request,res:Response,next:NextFunction) => 
             })
         }
 
-        const {uuid} = jwt.verify(token,SECRET_KEY as string) as PayloadJWT;
-        const user = await User.findById({_id:uuid})
+        const {uid} = jwt.verify(token,SECRET_KEY as string) as PayloadJWT;
+        const user = await User.findById({_id:uid})
 
         if(!user){
             return res.status(400).json({
@@ -29,7 +29,7 @@ export const validateJWT = async(req:Request,res:Response,next:NextFunction) => 
 
     }catch(err){
         return res.status(400).json({
-            msg:'Token no valido'
+            msg:'Token no valido',
         })
     }
 }

@@ -1,5 +1,6 @@
 import Router from 'express';
 import { validateJWT } from '../middlewares/validateJWT';
+import { validateAdminRole, isValidRole } from '../middlewares/validate-role';
 import {createProduct, 
         getProducts, 
         getProductByID,
@@ -10,15 +11,31 @@ import {createProduct,
 const router = Router();
 
 router.get('/',[
-        validateJWT
+        validateJWT,
+        isValidRole,
+        validateAdminRole
 ],getProducts);
 
-router.get('/:id',getProductByID);
+router.get('/:id',[
+        validateJWT,
+        isValidRole
+],getProductByID);
 
-router.post('/',createProduct);
+router.post('/',[
+        validateJWT,
+        isValidRole,
+        validateAdminRole
+],createProduct);
 
-router.put('/:id',updateProduct);
+router.put('/:id',[
+        validateJWT,
+        isValidRole,
+        validateAdminRole
+],updateProduct);
 
-router.delete('/:id',deleteProduct);
+router.delete('/:id',[
+        validateJWT,
+        isValidRole
+],deleteProduct);
 
 export default router;
