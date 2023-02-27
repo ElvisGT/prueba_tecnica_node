@@ -1,6 +1,8 @@
 import Router from 'express';
+import {check} from 'express-validator';
 import { validateJWT } from '../middlewares/validateJWT';
 import { validateAdminRole, isValidRole } from '../middlewares/validate-role';
+import { validateAll } from '../middlewares/validate-all';
 import {createProduct, 
         getProducts, 
         getProductByID,
@@ -18,7 +20,9 @@ router.get('/',[
 
 router.get('/:id',[
         validateJWT,
-        isValidRole
+        isValidRole,
+        check('id','No es un id valido de Mongo').isMongoId(),
+        validateAll
 ],getProductByID);
 
 router.post('/',[
@@ -30,12 +34,16 @@ router.post('/',[
 router.put('/:id',[
         validateJWT,
         isValidRole,
-        validateAdminRole
+        validateAdminRole,
+        check('id','No es un id valido de Mongo').isMongoId(),
+        validateAll
 ],updateProduct);
 
 router.delete('/:id',[
         validateJWT,
-        isValidRole
+        isValidRole,
+        check('id','No es un id valido de Mongo').isMongoId(),
+        validateAll
 ],deleteProduct);
 
 export default router;
