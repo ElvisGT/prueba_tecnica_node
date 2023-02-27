@@ -6,14 +6,14 @@ import {Users} from '../type/users';
 const getUsers = async(req: Request, res: Response) => {
     const users = await User.find({});
     
-    res.json({results:users})
+    res.json({results:users});
 };
 
 const getUserByID = async(req: Request, res: Response) => {
     const {id} = req.params;
     const user = await User.findById(id);
     
-    res.json(user)
+    res.json(user);
 };
 
 const createUser = async(req: Request, res: Response) => {
