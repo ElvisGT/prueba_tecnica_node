@@ -7,7 +7,8 @@ dontenv.config();
 import { PORT } from '../config/env.config';
 import {productsRoutes,
         storeRoutes,
-        usersRoutes} from '../routes'
+        usersRoutes,
+        loginRoutes} from '../routes';
 import db_conection from '../config/database';
 
 
@@ -18,7 +19,8 @@ export default class Server {
     private routesPath = {
         store:'/api/v1/store',
         users:'/api/v1/users',
-        products:'/api/v1/products'
+        products:'/api/v1/products',
+        login:'/api/v1/login'
     };
     
     constructor(){
@@ -50,6 +52,7 @@ export default class Server {
         this.app.use(this.routesPath.products,productsRoutes);
         this.app.use(this.routesPath.store,storeRoutes);
         this.app.use(this.routesPath.users,usersRoutes);
+        this.app.use(this.routesPath.login,loginRoutes);
     };
 
     async database() {

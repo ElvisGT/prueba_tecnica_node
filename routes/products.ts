@@ -1,4 +1,5 @@
 import Router from 'express';
+import { validateJWT } from '../middlewares/validateJWT';
 import {createProduct, 
         getProducts, 
         getProductByID,
@@ -8,7 +9,9 @@ import {createProduct,
 
 const router = Router();
 
-router.get('/',getProducts);
+router.get('/',[
+        validateJWT
+],getProducts);
 
 router.get('/:id',getProductByID);
 

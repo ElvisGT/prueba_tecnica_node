@@ -1,5 +1,4 @@
-export type Users = {
+export type Login = {
     name:string,
-    role:string,
     password:string | number
 }
